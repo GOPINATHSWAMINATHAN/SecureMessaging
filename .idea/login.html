@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+<head>
+
+    <title>Title</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css" rel="stylesheet"/>
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js" ></script>
+
+
+    <style>
+        body
+        {
+            background: #f5f5f5;
+        }
+
+        h5
+        {
+            font-weight: 400;
+        }
+
+        .container
+        {
+            margin-top: 80px;
+            width: 400px;
+            height: 700px;
+        }
+
+        .tabs .indicator
+        {
+            background-color: #e0f2f1;
+            height: 60px;
+            opacity: 0.3;
+        }
+
+        .form-container
+        {
+            padding: 40px;
+            padding-top: 10px;
+        }
+
+        .confirmation-tabs-btn
+        {
+            position: absolute;
+        }
+    </style>
+
+
+    <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+    <script>
+
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAIOqcdlu_4gL2kPf-CgyVn01WFkd6cs7w",
+            authDomain: "messaging-142a2.firebaseapp.com",
+            databaseURL: "https://messaging-142a2.firebaseio.com",
+            projectId: "messaging-142a2",
+            storageBucket: "messaging-142a2.appspot.com",
+            messagingSenderId: "472528376027"
+        };
+        firebase.initializeApp(config);
+    </script>
+
+    <script src="/__/firebase/4.8.1/firebase-app.js"></script>
+    <script src="/__/firebase/4.8.1/firebase-auth.js"></script>
+    <script src="/__/firebase/4.8.1/firebase-database.js"></script>
+    <script src="/__/firebase/4.8.1/firebase-messaging.js"></script>
+
+    <!-- Leave out Storage -->
+    <!-- <script src="/__/firebase/4.8.1/firebase-storage.js"></script> -->
+
+    <script src="/__/firebase/init.js"></script>
+
+    <title>TODO supply a title</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <script>
+        function initApp() {
+
+            document.getElementById('btnSubmit').addEventListener('click', handleSignUp, false);
+        }
+        window.onload = function() {
+            initApp();
+        };
+
+        function handleSignUp() {
+            var email = document.getElementById('email1').value;
+            var password = document.getElementById('password1').value;
+            alert(email)
+            alert(password)
+
+            if (password.length < 6) {
+                alert('Please enter a password.');
+                return;
+            }
+
+            // [START createwithemail]
+            firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+                // Handle Errors here.
+                var errorCode = error.code;
+                var errorMessage = error.message;
+                // [START_EXCLUDE]
+
+                if (errorCode == 'auth/weak-password') {
+                    alert('The password is too weak.');
+                } else {
+                    alert(errorMessage);
+                }
+                console.log(error);
+                alert("succes")
+                // [END_EXCLUDE]
+            });
+            // [END createwithemail]
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+<div class="container white z-depth-2">
+    <ul class="tabs teal">
+        <li class="tab col s3"><a class="white-text active" href="#login">login</a></li>
+        <li class="tab col s3"><a class="white-text" href="#register">register</a></li>
+    </ul>
+    <div id="login" class="col s12">
+
+        <div class="form-container">
+            <h3 class="teal-text">Hello</h3>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email" type="email" name="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password" name="password" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <br>
+            <center>
+                <button class="btn waves-effect waves-light teal" type="submit" name="action">Connect</button>
+                <br>
+                <br>
+                <a href="">Forgotten password?</a>
+            </center>
+        </div>
+
+    </div>
+    <div id="register" class="col s12">
+
+        <div class="form-container">
+            <h3 class="teal-text">Welcome</h3>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">First Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate">
+                    <label for="last_name">Last Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email1" type="email" class="validate">
+                    <label for="email">Email</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="email-confirm" type="text" class="validate">
+                    <label for="email-confirm">Company Name</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password1" type="password" class="validate">
+                    <label for="password">Password</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="password-confirm" type="password" class="validate">
+                    <label for="password-confirm">Password Confirmation</label>
+                </div>
+            </div>
+            <center>
+                <button class="btn waves-effect waves-light teal" id="btnSubmit" type="submit" name="action">Submit</button>
+            </center>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
